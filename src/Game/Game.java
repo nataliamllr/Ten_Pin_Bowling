@@ -1,7 +1,6 @@
 package Game;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Game {
 
@@ -24,12 +23,37 @@ public class Game {
         return score == 10;
     }
 
-    public boolean isSpareScored(int score) {
-        return true;
+    public void setPlayerScore(int bowl1Score, int bowl2Score,  int playerNum,  boolean isStrike, int currentFrameNum) {
+        players.get(playerNum).addScoreToScoreCard(bowl1Score, bowl2Score, isStrike);
+        if(isPreviousFrameSpare(playerNum, currentFrameNum) && currentFrameNum > 0) {
+            updatePlayerScoreForSpare(bowl1Score, playerNum, currentFrameNum);
+        }
+        if(isPreviousFrameStrike(playerNum, currentFrameNum) && currentFrameNum > 0) {
+
+        }
     }
 
-    public void setPlayerScore(int score1, int score2,  int playerNum,  boolean isStrike) {
-        players.get(playerNum).addScoreToScoreCard(score1, score2, isStrike);
+    public boolean isPreviousFrameSpare(int playerNum, int currentFrameNum) {
+        return players.get(playerNum).getScoreCard().get(currentFrameNum-1).getFrameTotalScore() == getMaxScore();
+    }
+
+    public void updatePlayerScoreForSpare(int score, int playerNum, int currentFrameNum) {
+        getPreviousFrame(playerNum, currentFrameNum).updateFrameScore(score);
+    }
+
+    public boolean isPreviousFrameStrike(int playerNum, int currentFrameNum) {
+        return getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() == getStrikeScore();
+    }
+
+    public void updatePlayerScoreForStrike(int playerNum, int currentFrameNum, int bowl1Score, int bowl2Score) {
+     //   if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousFrame() ){
+
+     //
+     //   }
+    }
+
+    public Frame getPreviousFrame(int playerNum, int currentFrameNum) {
+        return players.get(playerNum).getScoreCard().get(currentFrameNum-1);
     }
 
     /**
@@ -74,5 +98,13 @@ public class Game {
 
     public void setMaxFrames(int maxFrames) {
         this.maxFrames = maxFrames;
+    }
+
+    public int getMaxScore() {
+        return maxScore;
+    }
+
+    public void setMaxScore(int maxScore) {
+        this.maxScore = maxScore;
     }
 }

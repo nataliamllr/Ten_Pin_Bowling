@@ -3,8 +3,8 @@ package Game;
 import java.util.Scanner;
 
 public class Play {
-    static Game game;
-    static Scanner scanner;
+    private static Game game;
+    private static Scanner scanner;
 
     public static void main(String[] args) {
         game = new Game();
@@ -18,27 +18,33 @@ public class Play {
         int noOfPlayers = scanner.nextInt();
         checkAndCreateNumOfPlayers(noOfPlayers);
 
-        for (int frameNum = 0; frameNum< 10; frameNum++) {
+        for (int frameNum = 0; frameNum < 10; frameNum++) {
+            playFrame(frameNum);
+        }
+        System.out.println(game.getPlayers().toString());
+    }
 
-            for(int playerNum = 0; playerNum < game.getPlayers().size(); playerNum++) {
+    private static void playFrame(int frameNum) {
+        for (int playerNum = 0; playerNum < game.getPlayers().size(); playerNum++) {
+            playerBowl(frameNum, playerNum);
+        }
+    }
 
-                boolean isStrike = false;
-                int bowl1Score;
-                int bowl2Score;
+    private static void playerBowl(int frameNum, int playerNum) {
+        boolean isStrike = false;
+        int bowl1Score = 0;
+        int bowl2Score = 0;
 
-                System.out.println("Please enter player " + playerNum + ", Frame " + frameNum + ", bowl 1, score");
-                bowl1Score = scanner.nextInt();
-                if(game.isStrike(bowl1Score)){
-                    isStrike = true;
-                    game.setPlayerScore(bowl1Score, 0, playerNum,  isStrike);
-                    continue;
-                } else {
-                    System.out.println("Please enter player " + playerNum + ", Frame " + frameNum + ", bowl 2, score");
-                    bowl2Score = scanner.nextInt();
-                    game.setPlayerScore(bowl1Score, bowl2Score, playerNum,  isStrike);
-                }
-
-            }
+        System.out.println("Please enter player - " + game.getPlayers().get(playerNum).getName() + ", Frame - " + frameNum + ", bowl - 1, score:");
+        bowl1Score = scanner.nextInt();
+        if (game.isStrike(bowl1Score)) {
+            isStrike = true;
+            game.setPlayerScore(bowl1Score, bowl2Score, playerNum, isStrike, frameNum);
+            return;
+        } else {
+            System.out.println("Please enter player - " + game.getPlayers().get(playerNum).getName() + ", Frame - " + frameNum + ", bowl -  2, score:");
+            bowl2Score = scanner.nextInt();
+            game.setPlayerScore(bowl1Score, bowl2Score, playerNum, isStrike, frameNum);
         }
     }
 
