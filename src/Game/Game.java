@@ -2,50 +2,60 @@ package Game;
 
 import java.util.ArrayList;
 
+
 public class Game {
 
-	private ArrayList<Player> players;
-	private int maxPlayers = 6;
-	
-	public Game() {
-		players = new ArrayList<Player>();
-	}
-	
-	public void newPlayer(String playerName) {
-		Player player = new Player(playerName);
-		players.add(player);
-	}
+    private ArrayList<Player> players;
+    private int maxPlayers = 6;
 
-	/**
-	 * @return the players
-	 */
-	public ArrayList<Player> getPlayers() {
-		return players;
-	}
+    public Game() {
+        players = new ArrayList<Player>();
+    }
 
-	/**
-	 * @param players the players to set
-	 */
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
+    public void newPlayer(String playerName) {
+        Player player = new Player(playerName);
+        players.add(player);
+    }
 
-	/**
-	 * @return the maxPlayers
-	 */
-	public int getMaxPlayers() {
-		return maxPlayers;
-	}
+    public boolean isStrike(int score) {
+        return score == 10;
+    }
 
-	/**
-	 * @param maxPlayers the maxPlayers to set
-	 */
-	public void setMaxPlayers(int maxPlayers) {
-		this.maxPlayers = maxPlayers;
-	}
-	
-	
-	
+    public boolean isSpareScored(int score) {
+        return true;
+    }
 
-	
+    public void setPlayerScore(int score, int playerNum, int bowlNum) {
+
+    }
+
+    /**
+     * @return the players
+     */
+    public ArrayList<Player> getPlayers() {
+        return players;
+    }
+
+    /**
+     * @param players the players to set
+     */
+    public void setPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
+    /**
+     * @return the maxPlayers
+     */
+    public int getMaxPlayers() {
+        return maxPlayers;
+    }
+
+    /**
+     * @param maxPlayers the maxPlayers to set
+     */
+    public void setMaxPlayers(int maxPlayers) {
+        this.maxPlayers = maxPlayers;
+    }
+
+
 }

@@ -1,47 +1,39 @@
 package Game;
+import java.util.ArrayList;
 
 public class Player {
-	
-	private String name;
-	private int score;
-	
-	public Player(String playerName) {
-		name = playerName;
-		score = 0;
-	}
-	
-	public void appendScore(int newScore) {
-		
-	}
 
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
+    private String name;
+    private ArrayList<Integer> scores;
 
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Player(String playerName) {
+        name = playerName;
+        scores = new ArrayList<Integer>();
+    }
 
-	/**
-	 * @return the score
-	 */
-	public int getScore() {
-		return score;
-	}
+    public void appendScore(int newScore) {
 
-	/**
-	 * @param score the score to set
-	 */
-	public void setScore(int score) {
-		this.score = score;
-	}
-	
-	
+        scores.add(newScore);
+    }
+
+    public void bowl(){
+
+    }
+
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+
 
 }
