@@ -21,7 +21,7 @@ public class Play {
         for (int frameNum = 0; frameNum < 10; frameNum++) {
             playFrame(frameNum);
         }
-        System.out.println(game.getPlayers().toString());
+        System.out.println(game.printFullScoreCard());
     }
 
     private static void playFrame(int frameNum) {

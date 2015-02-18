@@ -37,6 +37,21 @@ public class Player {
     public void addScoreToScoreCard(int score1, int score2,  boolean isStrike) {
         Frame frame = new Frame(score1, score2, isStrike);
         scoreCard.add(frame);
-      //  scoreCard.put(frameNum, frame);
+    }
+
+    public String printScoreCard() {
+        String results = "";
+        for (int i = 0; i < scoreCard.size(); i++) {
+            results = "Frame "+ i + scoreCard.get(i).toString();
+        }
+        return results;
+    }
+
+    public int getTotalFromScoreCard() {
+        int total = 0;
+        for(Frame sC : scoreCard) {
+            total += sC.getFrameTotalScorePlusExtra();
+        }
+        return total;
     }
 }

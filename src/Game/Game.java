@@ -23,37 +23,61 @@ public class Game {
         return score == 10;
     }
 
-    public void setPlayerScore(int bowl1Score, int bowl2Score,  int playerNum,  boolean isStrike, int currentFrameNum) {
+    public void setPlayerScore(int bowl1Score, int bowl2Score, int playerNum, boolean isStrike, int currentFrameNum) {
         players.get(playerNum).addScoreToScoreCard(bowl1Score, bowl2Score, isStrike);
-        if(isPreviousFrameSpare(playerNum, currentFrameNum) && currentFrameNum > 0) {
-            updatePlayerScoreForSpare(bowl1Score, playerNum, currentFrameNum);
+        if(currentFrameNum > 0){
+            checkAndScoreForSpare(bowl1Score, playerNum, currentFrameNum);
         }
-        if(isPreviousFrameStrike(playerNum, currentFrameNum) && currentFrameNum > 0) {
+        if(currentFrameNum > 1) {
+            checkAndScoreForStrike(playerNum, currentFrameNum);
+        }
 
+    }
+
+    private void checkAndScoreForStrike(int playerNum, int currentFrameNum) {
+        if (isPreviousPreviousFrameStrike(playerNum, currentFrameNum)) {
+
+        }
+    }
+
+    private void checkAndScoreForSpare(int bowl1Score, int playerNum, int currentFrameNum) {
+        if (isPreviousFrameSpare(playerNum, currentFrameNum)) {
+            updatePreviousFrameForSpare(bowl1Score, playerNum, currentFrameNum);
         }
     }
 
     public boolean isPreviousFrameSpare(int playerNum, int currentFrameNum) {
-        return players.get(playerNum).getScoreCard().get(currentFrameNum-1).getFrameTotalScore() == getMaxScore();
+        return  getPreviousFrame(playerNum, currentFrameNum).getFrameTotalScore() == getMaxScore() && !(getPreviousFrame(playerNum, currentFrameNum).isStrike());
     }
 
-    public void updatePlayerScoreForSpare(int score, int playerNum, int currentFrameNum) {
+    public void updatePreviousFrameForSpare(int score, int playerNum, int currentFrameNum) {
         getPreviousFrame(playerNum, currentFrameNum).updateFrameScore(score);
     }
 
-    public boolean isPreviousFrameStrike(int playerNum, int currentFrameNum) {
-        return getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() == getStrikeScore();
+    public boolean isPreviousPreviousFrameStrike(int playerNum, int currentFrameNum) {
+        return getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike();
     }
 
+    public Frame getPreviousPreviousFrame(int playerNum, int currentFrameNum) {
+        return players.get(playerNum).getScoreCard().get(currentFrameNum - 2);
+    }
     public void updatePlayerScoreForStrike(int playerNum, int currentFrameNum, int bowl1Score, int bowl2Score) {
-     //   if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousFrame() ){
+        //   if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousFrame() ){
 
-     //
-     //   }
+        //
+        //   }
     }
 
     public Frame getPreviousFrame(int playerNum, int currentFrameNum) {
-        return players.get(playerNum).getScoreCard().get(currentFrameNum-1);
+        return players.get(playerNum).getScoreCard().get(currentFrameNum - 1);
+    }
+
+    public String printFullScoreCard() {
+        String scoreCard = "";
+        for(Player player: players) {
+            scoreCard = player.getName() + " " + player.printScoreCard();
+        }
+        return scoreCard;
     }
 
     /**
