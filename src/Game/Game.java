@@ -1,12 +1,15 @@
 package Game;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
 
 public class Game {
 
     private ArrayList<Player> players;
     private int maxPlayers = 6;
+    private int strikeScore = 10;
+    private int maxFrames = 10;
+    private int maxScore = 10;
 
     public Game() {
         players = new ArrayList<Player>();
@@ -25,8 +28,8 @@ public class Game {
         return true;
     }
 
-    public void setPlayerScore(int score, int playerNum, int bowlNum) {
-
+    public void setPlayerScore(int score1, int score2,  int playerNum,  boolean isStrike) {
+        players.get(playerNum).addScoreToScoreCard(score1, score2, isStrike);
     }
 
     /**
@@ -57,5 +60,19 @@ public class Game {
         this.maxPlayers = maxPlayers;
     }
 
+    public int getStrikeScore() {
+        return strikeScore;
+    }
 
+    public void setStrikeScore(int strikeScore) {
+        this.strikeScore = strikeScore;
+    }
+
+    public int getMaxFrames() {
+        return maxFrames;
+    }
+
+    public void setMaxFrames(int maxFrames) {
+        this.maxFrames = maxFrames;
+    }
 }

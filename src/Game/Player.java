@@ -1,23 +1,15 @@
 package Game;
+
 import java.util.ArrayList;
 
 public class Player {
 
     private String name;
-    private ArrayList<Integer> scores;
+    private ArrayList<Frame> scoreCard;
 
     public Player(String playerName) {
         name = playerName;
-        scores = new ArrayList<Integer>();
-    }
-
-    public void appendScore(int newScore) {
-
-        scores.add(newScore);
-    }
-
-    public void bowl(){
-
+        scoreCard = new ArrayList<Frame>();
     }
 
     /**
@@ -34,6 +26,17 @@ public class Player {
         this.name = name;
     }
 
+    public ArrayList<Frame> getScoreCard() {
+        return scoreCard;
+    }
 
+    public void setScoreCard(ArrayList< Frame> scoreCard) {
+        this.scoreCard = scoreCard;
+    }
 
+    public void addScoreToScoreCard(int score1, int score2,  boolean isStrike) {
+        Frame frame = new Frame(score1, score2, isStrike);
+        scoreCard.add(frame);
+      //  scoreCard.put(frameNum, frame);
+    }
 }
