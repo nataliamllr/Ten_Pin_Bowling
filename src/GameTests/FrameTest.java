@@ -1,55 +1,37 @@
 package GameTests;
 
 import junit.framework.TestCase;
+import org.junit.*;
+import Game.Frame;
 
 public class FrameTest extends TestCase {
+    Frame frame;
 
+    @Before
     public void setUp() throws Exception {
         super.setUp();
+        frame = new Frame(2,4,false);
 
     }
 
-    public void testGetFrameTotalScore() throws Exception {
-
+    @Test
+    public void testGetFrameTotalScore() {
+        assertEquals("Frame total score is: ", 6, frame.getFrameTotalScore());
     }
 
-    public void testGetFrameTotalScorePlusExtra() throws Exception {
-
+    @Test
+    public void testGetFrameTotalScorePlusExtra() {
+        frame.updateFrameScore(4);
+       assertEquals("Frame Total Score: " , 10, frame.getFrameTotalScorePlusExtra());
     }
 
-    public void testUpdateFrameScore() throws Exception {
-
+    @Test
+    public void testUpdateFrameScore() {
+        frame.updateFrameScore(3);
+        assertEquals("Frame Total Score: ", 9, frame.getFrameTotalScorePlusExtra());
     }
 
-    public void testGetSecondBowl() throws Exception {
 
-    }
 
-    public void testSetSecondBowl() throws Exception {
 
-    }
-
-    public void testGetFirstBowl() throws Exception {
-
-    }
-
-    public void testSetFirstBowl() throws Exception {
-
-    }
-
-    public void testIsStrike() throws Exception {
-
-    }
-
-    public void testSetStrike() throws Exception {
-
-    }
-
-    public void testGetExtraBowl() throws Exception {
-
-    }
-
-    public void testSetExtraBowl() throws Exception {
-
-    }
 }

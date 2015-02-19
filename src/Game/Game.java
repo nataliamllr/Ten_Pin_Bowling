@@ -6,7 +6,6 @@ public class Game {
 
     private ArrayList<Player> players;
     private int maxPlayers = 6;
-    private int strikeScore = 10;
     private int maxFrames = 10;
     private int maxScore = 10;
 
@@ -19,38 +18,35 @@ public class Game {
         players.add(player);
     }
 
-    public boolean isStrike(int score) {
-        return score == 10;
-    }
-
-    public void setPlayerScore(int bowl1Score, int bowl2Score, int playerNum, boolean isStrike, int currentFrameNum) {
-        players.get(playerNum).addScoreToScoreCard(bowl1Score, bowl2Score, isStrike);
-        if(currentFrameNum > 0){
-            checkAndScoreForSpare(bowl1Score, playerNum, currentFrameNum);
-            checkAndScoreForStrike(playerNum, currentFrameNum, bowl1Score, bowl2Score);
+    public void updateScore(int playerNum, int currentFrameNum) {
+        if (currentFrameNum > 0) {
+            checkAndScoreForSpare(playerNum, currentFrameNum);
+            checkAndScoreForStrike(playerNum, currentFrameNum);
         }
     }
 
-    private void checkAndScoreForStrike(int playerNum, int currentFrameNum, int bowl1Score, int bowl2Score) {
+    private void checkAndScoreForStrike(int playerNum, int currentFrameNum) {
+        // if previous frame is a strike and this frame is not a strike, then add these two bowls to the previous frame.
         if (isPreviousFrameStrike(playerNum, currentFrameNum) && !(getCurrentFrame(playerNum, currentFrameNum).isStrike())) {
-            int extraPoints = bowl1Score + bowl2Score;
+            // extra points calculated from current frame first bowl and second bowl
+            int extraPoints = getCurrentFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getSecondBowl();
             updatePreviousFrameScore(extraPoints, playerNum, currentFrameNum);
-        } else if(currentFrameNum > 1) {
-            if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike()) {
+            // if previous frame is a strike, and the frame previous to that is a strike and there have been enough frames to calculate this,
+            // add the strike points from last frame and the first bowl from this frame
+        } else if (isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike() && currentFrameNum > 1) {
                 int extraPoints = getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstBowl();
                 getPreviousPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPoints);
-            }
         }
     }
 
-    private void checkAndScoreForSpare(int bowl1Score, int playerNum, int currentFrameNum) {
+    private void checkAndScoreForSpare( int playerNum, int currentFrameNum) {
         if (isPreviousFrameSpare(playerNum, currentFrameNum)) {
-            updatePreviousFrameScore(bowl1Score, playerNum, currentFrameNum);
+            updatePreviousFrameScore(getCurrentFrame(playerNum, currentFrameNum).getFirstBowl(), playerNum, currentFrameNum);
         }
     }
 
     public boolean isPreviousFrameSpare(int playerNum, int currentFrameNum) {
-        return  getPreviousFrame(playerNum, currentFrameNum).getFrameTotalScore() == getMaxScore() && !(getPreviousFrame(playerNum, currentFrameNum).isStrike());
+        return getPreviousFrame(playerNum, currentFrameNum).isSpare() && !(getPreviousFrame(playerNum, currentFrameNum).isStrike());
     }
 
     public void updatePreviousFrameScore(int score, int playerNum, int currentFrameNum) {
@@ -62,38 +58,54 @@ public class Game {
     }
 
     public Frame getPreviousPreviousFrame(int playerNum, int currentFrameNum) {
-        return players.get(playerNum).getScoreCard().get(currentFrameNum - 2);
+        return players.get(playerNum).getFrame(currentFrameNum - 2);
     }
 
-    public Frame getCurrentFrame(int playerNum, int currenFrameNum) {
-        return players.get(playerNum).getScoreCard().get(currenFrameNum);
+    public Frame getCurrentFrame(int playerNum, int currentFrameNum) {
+        return players.get(playerNum).getFrame(currentFrameNum);
     }
 
 
     public Frame getPreviousFrame(int playerNum, int currentFrameNum) {
-        return players.get(playerNum).getScoreCard().get(currentFrameNum - 1);
+        return players.get(playerNum).getFrame(currentFrameNum - 1);
     }
 
     public String printFullScoreCard() {
         String scoreCard = "";
-        for(Player player: players) {
+        for (Player player : players) {
             scoreCard = player.getName() + " " + player.printScoreCard() + " \n ";
         }
         return scoreCard;
     }
 
+    public Player getPlayer(int playerNum) {
+        return getPlayers().get(playerNum);
+    }
+
+    public boolean isBowl1Valid(int score) {
+        return score <= getMaxScore() && score >= 0;
+    }
+
+    public boolean isBowl2Valid(int bowl1Score, int bowl2Score) {
+        return  (bowl1Score + bowl2Score) < getMaxScore();
+    }
+
+    public boolean isNoOfPlayersValid(int noOfPlayers) {
+        return noOfPlayers <= getMaxPlayers() && noOfPlayers > 0;
+    }
+
+    public boolean isStrike(int bowlScore) {
+        return bowlScore == getMaxScore();
+    }
+
+    public boolean isStrikeOrSpare(int playerNum, int frameNum) {
+        return getCurrentFrame(playerNum, frameNum).isSpare() || getCurrentFrame(playerNum, frameNum).isStrike();
+    }
     /**
      * @return the players
      */
     public ArrayList<Player> getPlayers() {
         return players;
-    }
-
-    /**
-     * @param players the players to set
-     */
-    public void setPlayers(ArrayList<Player> players) {
-        this.players = players;
     }
 
     /**
@@ -103,34 +115,12 @@ public class Game {
         return maxPlayers;
     }
 
-    /**
-     * @param maxPlayers the maxPlayers to set
-     */
-    public void setMaxPlayers(int maxPlayers) {
-        this.maxPlayers = maxPlayers;
-    }
-
-    public int getStrikeScore() {
-        return strikeScore;
-    }
-
-    public void setStrikeScore(int strikeScore) {
-        this.strikeScore = strikeScore;
-    }
 
     public int getMaxFrames() {
         return maxFrames;
     }
 
-    public void setMaxFrames(int maxFrames) {
-        this.maxFrames = maxFrames;
-    }
-
     public int getMaxScore() {
         return maxScore;
-    }
-
-    public void setMaxScore(int maxScore) {
-        this.maxScore = maxScore;
     }
 }

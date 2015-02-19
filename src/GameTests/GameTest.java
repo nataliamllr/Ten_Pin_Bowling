@@ -1,9 +1,8 @@
 package GameTests;
 
-import junit.framework.TestCase;
 import org.junit.Test;
 
-public class GameTest extends TestCase {
+public class GameTest  {
 
     @Test
     public void testNewPlayer()  {

@@ -1,8 +1,5 @@
 package Game;
 
-/**
- * Created by Natalia on 18/02/2015.
- */
 public class Frame {
     private int firstBowl;
     private int secondBowl;
@@ -30,36 +27,20 @@ public class Frame {
         extraPoints += score;
     }
 
-    public int getSecondBowl() {
-        return secondBowl;
-    }
-
-    public void setSecondBowl(int secondBowl) {
-        this.secondBowl = secondBowl;
-    }
-
-    public int getFirstBowl() {
-        return firstBowl;
-    }
-
-    public void setFirstBowl(int firstBowl) {
-        this.firstBowl = firstBowl;
+    public boolean isSpare() {
+        return getFrameTotalScore() == 10;
     }
 
     public boolean isStrike() {
         return strike;
     }
 
-    public void setStrike(boolean strike) {
-        this.strike = strike;
+    public int getSecondBowl() {
+        return secondBowl;
     }
 
-    public int getExtraBowl() {
-        return extraBowl;
-    }
-
-    public void setExtraBowl(int extraBowl) {
-        this.extraBowl = extraBowl;
+    public int getFirstBowl() {
+        return firstBowl;
     }
 
     public String toString() {

@@ -1,8 +1,9 @@
 package GameTests;
 
-import junit.framework.TestCase;
+import org.junit.*;
 
-public class PlayerTests extends TestCase {
+public class PlayerTests {
+
 
 	
 }
