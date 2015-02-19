@@ -23,17 +23,17 @@ public class Player {
         return scoreCard;
     }
 
-    public void bowl(int score1, int score2, boolean isStrike) {
-        Frame frame = new Frame(score1, score2, isStrike);
+    public void bowl(int score1, int score2) {
+        Frame frame = new Frame(score1, score2);
         scoreCard.add(frame);
     }
 
     public String printScoreCard() {
         String results = "";
-        for (int i = 0; i < scoreCard.size(); i++) {
-            results = "Frame " + i + scoreCard.get(i).toString() + "     |     ";
+        for (int i = 0; i < scoreCard.size()-1; i++) {
+            results = results+  i + scoreCard.get(i).toString() + " |  ";
         }
-        return results;
+        return results + "Total: " + getTotalFromScoreCard();
     }
 
     public int getTotalFromScoreCard() {

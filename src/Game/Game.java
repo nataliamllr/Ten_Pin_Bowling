@@ -21,6 +21,8 @@ public class Game {
     public void updateScore(int playerNum, int currentFrameNum) {
         if (currentFrameNum > 0) {
             checkAndScoreForSpare(playerNum, currentFrameNum);
+        }
+        if(currentFrameNum > 1) {
             checkAndScoreForStrike(playerNum, currentFrameNum);
         }
     }
@@ -33,9 +35,10 @@ public class Game {
             updatePreviousFrameScore(extraPoints, playerNum, currentFrameNum);
             // if previous frame is a strike, and the frame previous to that is a strike and there have been enough frames to calculate this,
             // add the strike points from last frame and the first bowl from this frame
-        } else if (isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike() && currentFrameNum > 1) {
-                int extraPoints = getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstBowl();
-                getPreviousPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPoints);
+        }
+        if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike()) {
+            int extraPoints = getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstBowl();
+            getPreviousPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPoints);
         }
     }
 
@@ -73,7 +76,7 @@ public class Game {
     public String printFullScoreCard() {
         String scoreCard = "";
         for (Player player : players) {
-            scoreCard = player.getName() + " " + player.printScoreCard() + " \n ";
+            scoreCard = scoreCard + player.getName() + " " + player.printScoreCard() + " \n ";
         }
         return scoreCard;
     }
@@ -87,7 +90,7 @@ public class Game {
     }
 
     public boolean isBowl2Valid(int bowl1Score, int bowl2Score) {
-        return  (bowl1Score + bowl2Score) < getMaxScore();
+        return  (bowl1Score + bowl2Score) <= getMaxScore();
     }
 
     public boolean isNoOfPlayersValid(int noOfPlayers) {

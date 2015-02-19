@@ -10,8 +10,7 @@ public class FrameTest extends TestCase {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        frame = new Frame(2,4,false);
-
+        frame = new Frame(2,4);
     }
 
     @Test
