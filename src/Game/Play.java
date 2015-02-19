@@ -18,7 +18,7 @@ public class Play {
         int noOfPlayers = scanner.nextInt();
         checkAndCreateNumOfPlayers(noOfPlayers);
 
-        for (int frameNum = 0; frameNum < 10; frameNum++) {
+        for (int frameNum = 0; frameNum < game.getMaxFrames(); frameNum++) {
             playFrame(frameNum);
         }
         System.out.println(game.printFullScoreCard());

@@ -42,7 +42,7 @@ public class Player {
     public String printScoreCard() {
         String results = "";
         for (int i = 0; i < scoreCard.size(); i++) {
-            results = "Frame "+ i + scoreCard.get(i).toString();
+            results = "Frame "+ i + scoreCard.get(i).toString() + "     |     ";
         }
         return results;
     }

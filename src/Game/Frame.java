@@ -63,7 +63,7 @@ public class Frame {
     }
 
     public String toString() {
-        return "Frame Total: " + getFrameTotalScorePlusExtra();
+        return "    Frame Total: " + getFrameTotalScorePlusExtra();
     }
 
 }
