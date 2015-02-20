@@ -52,9 +52,10 @@ public class Game {
             int extraPoints = getCurrentFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getSecondBowl();
             updatePreviousFrameScore(extraPoints, playerNum, currentFrameNum);
         }
-        // if the previous and previous previous frames are strikes and this is the last frame which is also a strike, then add the points to the previous previous strike
-        // and to the previous strike, add the first bowl and first extra bowl of the current frame
+
         if(currentFrameNum > 1) {
+            // if the previous and previous previous frames are strikes and this is the last frame which is also a strike, then add the points to the previous previous strike
+            // and to the previous strike, add the first bowl and first extra bowl of the current frame
             if (isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike()
                     && currentFrameNum == getMaxFrames() - 1 && getCurrentFrame(playerNum, currentFrameNum).isStrike()) {
 
@@ -64,6 +65,11 @@ public class Game {
                 int extraPointsForPS = getCurrentFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstExtraBowl();
                 getPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPointsForPS);
 
+            }
+            // else if this is the last frame, and the previous frame is a strike and this is a strike, but the previous previous frame is not a strike
+            else if(isPreviousFrameStrike(playerNum, currentFrameNum) && getCurrentFrame(playerNum, currentFrameNum).isStrike() && currentFrameNum == getMaxFrames()-1) {
+                    int extraPoints = getCurrentFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstExtraBowl();
+                    getPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPoints);
             }
             // if previous frame is a strike, and the frame previous to that is a strike
             // add the strike points from last frame and the first bowl from this frame
