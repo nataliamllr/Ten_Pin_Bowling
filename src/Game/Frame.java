@@ -93,10 +93,18 @@ public class Frame {
         firstExtraBowl = extraScore;
     }
 
+    /**
+     * Set the seconf extra bowl score. This is achieved if the last frams is a strike.
+     * @param extraScore
+     */
     public void setSecondExtraBowl(int extraScore) {
         secondExtraBowl  = extraScore;
     }
 
+    /**
+     * Returns the first extra bowl of the frame.
+     * @return
+     */
     public int getFirstExtraBowl() {
         return firstExtraBowl;
     }

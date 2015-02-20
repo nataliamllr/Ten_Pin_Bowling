@@ -103,11 +103,6 @@ public class GameTest {
     }
 
     @Test
-    public void testPrintFullScoreCard() throws Exception {
-
-    }
-
-    @Test
     public void testGetPlayer() throws Exception {
         assertEquals("Player name is Nat", "Nat", game.getPlayer(0).getName());
     }

@@ -41,6 +41,13 @@ public class Player {
         scoreCard.add(frame);
     }
 
+    /**
+     * Bowl with extra bowl values. Used when player has achieved a strike or spare on the last frame.
+     * @param score1
+     * @param score2
+     * @param extraBowl1
+     * @param extraBowl2
+     */
     public void extraBowl(int score1, int score2, int extraBowl1, int extraBowl2) {
         Frame frame = new Frame(score1, score2);
         frame.setFirstExtraBowl(extraBowl1);
