@@ -9,33 +9,52 @@ public class Game {
     private int maxFrames = 10;
     private int maxScore = 10;
 
+    /**
+     * Constructor for game
+     */
     public Game() {
         players = new ArrayList<Player>();
     }
 
+    /**
+     * Create a new player with the player name. Add the new player to the list of players.
+     * @param playerName
+     */
     public void newPlayer(String playerName) {
         Player player = new Player(playerName);
         players.add(player);
     }
 
+    /**
+     * Checks whether the previous frames need to be updated with a new score. Check whether previous frames are either spare or strike.
+     * @param playerNum
+     * @param currentFrameNum
+     */
     public void updateScore(int playerNum, int currentFrameNum) {
+        // Has to be at least frame 2
         if (currentFrameNum > 0) {
             checkAndScoreForSpare(playerNum, currentFrameNum);
         }
+        // has to be at least frame 3 because may be spares in a row
         if(currentFrameNum > 1) {
             checkAndScoreForStrike(playerNum, currentFrameNum);
         }
     }
 
+    /**
+     *
+     * @param playerNum
+     * @param currentFrameNum
+     */
     private void checkAndScoreForStrike(int playerNum, int currentFrameNum) {
         // if previous frame is a strike and this frame is not a strike, then add these two bowls to the previous frame.
         if (isPreviousFrameStrike(playerNum, currentFrameNum) && !(getCurrentFrame(playerNum, currentFrameNum).isStrike())) {
             // extra points calculated from current frame first bowl and second bowl
             int extraPoints = getCurrentFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getSecondBowl();
             updatePreviousFrameScore(extraPoints, playerNum, currentFrameNum);
-            // if previous frame is a strike, and the frame previous to that is a strike and there have been enough frames to calculate this,
-            // add the strike points from last frame and the first bowl from this frame
         }
+        // if previous frame is a strike, and the frame previous to that is a strike and there have been enough frames to calculate this,
+        // add the strike points from last frame and the first bowl from this frame
         if(isPreviousFrameStrike(playerNum, currentFrameNum) && getPreviousPreviousFrame(playerNum, currentFrameNum).isStrike()) {
             int extraPoints = getPreviousFrame(playerNum, currentFrameNum).getFirstBowl() + getCurrentFrame(playerNum, currentFrameNum).getFirstBowl();
             getPreviousPreviousFrame(playerNum, currentFrameNum).updateFrameScore(extraPoints);
