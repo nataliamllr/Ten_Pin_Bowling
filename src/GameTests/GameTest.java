@@ -36,27 +36,25 @@ public class GameTest {
     @Test
     public void testUpdateScoreWith10Strikes() throws Exception {
         game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,0);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,1);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,2);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,3);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,4);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,5);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,6);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,7);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,8);
-        game.getPlayer(0).bowl(10,0);
+        game.updateScore(0, 0);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 1);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 2);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 3);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 4);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 5);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 6);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 7);
+        game.getPlayer(0).bowl(10, 0);
+        game.updateScore(0, 8);
+        game.getPlayer(0).extraBowl(10,0,10,10);
         game.updateScore(0,9);
-        game.getPlayer(0).bowl(10,0);
-        game.updateScore(0,10);
         assertEquals("Total for player is 300", 300, game.getPlayer(0).getTotalFromScoreCard());
 
     }
@@ -73,7 +71,7 @@ public class GameTest {
         game.getPlayer(0).bowl(3,4);
         game.getPlayer(0).bowl(2,2);
         game.updatePreviousFrameScore(2, 0, 1);
-        assertEquals("New frame score is 9", 9, game.getPlayer(0).getTotalFromScoreCard() );
+        assertEquals("New frame score is 9", 9, game.getPlayer(0).getFrame(0).getFrameTotalScorePlusExtra() );
     }
 
     @Test
@@ -136,16 +134,6 @@ public class GameTest {
     public void testIsStrike() throws Exception {
         assertEquals("Bowl is not a strike", false, game.isStrike(3));
         assertEquals("Bowl is a strike", true, game.isStrike(10));
-    }
-
-    @Test
-    public void testIsStrikeOrSpare() throws Exception {
-        game.getPlayer(0).bowl(10,0);
-        game.getPlayer(0).bowl(5,5);
-        game.getPlayer(0).bowl(3,3);
-        assertEquals("Bowl 1 is strike", true, game.isStrikeOrSpare(0,0));
-        assertEquals("Bowl 2 is spare", true, game.isStrikeOrSpare(0,1));
-        assertEquals("Bowl 3 is neither", false, game.isStrikeOrSpare(0,2));
     }
 
     @Test

@@ -3,7 +3,8 @@ package Game;
 public class Frame {
     private int firstBowl;
     private int secondBowl;
-    private int extraBowl;
+    private int firstExtraBowl;
+    private int secondExtraBowl;
     private int extraPoints;
 
     /**
@@ -14,8 +15,10 @@ public class Frame {
     public Frame(int bow1, int bowl2) {
         firstBowl = bow1;
         secondBowl = bowl2;
-        extraBowl = 0;
+        firstExtraBowl = 0;
+        secondExtraBowl = 0;
         extraPoints = 0;
+
     }
 
     /**
@@ -31,7 +34,7 @@ public class Frame {
      * @return
      */
     public int getFrameTotalScorePlusExtra() {
-        return firstBowl + secondBowl + extraPoints + extraBowl;
+        return firstBowl + secondBowl + extraPoints + firstExtraBowl + secondExtraBowl;
     }
 
     /**
@@ -79,15 +82,23 @@ public class Frame {
      * @return
      */
     public String toString() {
-        return "    Frame Total: " + getFrameTotalScorePlusExtra();
+        return  String.valueOf(getFrameTotalScorePlusExtra());
     }
 
     /**
      * Set an extra bowl score. This is achieved if the last frame is a spare or strike
      * @param extraScore
      */
-    public void setExtraBowl(int extraScore){
-        extraBowl = extraScore;
+    public void setFirstExtraBowl(int extraScore){
+        firstExtraBowl = extraScore;
+    }
+
+    public void setSecondExtraBowl(int extraScore) {
+        secondExtraBowl  = extraScore;
+    }
+
+    public int getFirstExtraBowl() {
+        return firstExtraBowl;
     }
 
 }

@@ -34,17 +34,27 @@ public class Play {
 
         System.out.println("Please enter player - " + game.getPlayer(playerNum).getName() + ", Frame - " + frameNum + ", bowl - 1, score:");
         int bowl1Score = scanner.nextInt();
+        // if the bowl is valid
         if (game.isBowl1Valid(bowl1Score)) {
-            if (game.isStrike(bowl1Score)) {
+            // if the bowl is a strike and this is the last frame
+            if(game.isStrike(bowl1Score) && frameNum == game.getMaxFrames()-1){
+                System.out.println("You have achieved two extra bowls! - Enter Bowl 1 Score");
+                int extraScore1 = scanner.nextInt();
+                System.out.println("Enter Bowl 2 score");
+                int extraScore2 = scanner.nextInt();
+                // you achieve an extra bowl and the points are saved as extra points in the frame
+                game.getPlayer(0).extraBowl(bowl1Score, 0, extraScore1, extraScore2);
+                game.updateScore(playerNum, frameNum);
+            // if the bowl is a strike in a normal frame
+            } else if (game.isStrike(bowl1Score)) {
                 game.getPlayer(playerNum).bowl(bowl1Score, 0);
                 game.updateScore(playerNum, frameNum);
-            } else if(frameNum == 10) {
-                game.getPlayer(playerNum).bowl(bowl1Score, 0);
-                game.updateScore(playerNum, frameNum);
+            // else play second bowl
             } else {
                 playerSecondBowl(frameNum, playerNum, bowl1Score);
             }
         } else {
+            //else your bowl is invalid so try again
             System.out.println("Sorry your first bowl score has to be between 0 & 10 - Try Again");
             playerBowl(frameNum, playerNum);
         }
@@ -54,17 +64,20 @@ public class Play {
     private static void playerSecondBowl(int frameNum, int playerNum, int bowl1Score) {
         System.out.println("Please enter player - " + game.getPlayer(playerNum).getName() + ", Frame - " + frameNum + ", bowl -  2, score:");
         int bowl2Score = scanner.nextInt();
-        if (game.isBowl2Valid(bowl1Score, bowl2Score)) {
+        // if bowl is valid and its a spare and its the last frame, then you have achieved an extra bowl
+        if(game.isBowl2Valid(bowl1Score, bowl2Score) && game.isSpare(bowl1Score, bowl2Score) && game.getMaxFrames()-1 == frameNum) {
+            System.out.println("You have achieved an extra bowl! - Enter Bowl Score");
+            int extraBowl = scanner.nextInt();
+            ;game.getPlayer(playerNum).extraBowl(bowl1Score, bowl2Score, extraBowl, 0);
+            game.updateScore(playerNum, frameNum);
+        // else if the frame is normal and the bowl is valid. update the score afterwards to check previous frames for spares or strikes
+        } else if (game.isBowl2Valid(bowl1Score, bowl2Score)) {
             game.getPlayer(playerNum).bowl(bowl1Score, bowl2Score);
             game.updateScore(playerNum, frameNum);
+        // else the bowl is invalid so try again
         } else {
             System.out.println("Sorry your second bowl score is invalid - Try again");
             playerSecondBowl(frameNum, playerNum,  bowl1Score);
-        }
-        // on last frame if player has scored a strike or a spare
-        if(frameNum == game.getMaxFrames()-1 && game.isStrikeOrSpare(playerNum, frameNum)) {
-            System.out.println("You have achieved an extra bowl!");
-            playerBowl(game.getMaxFrames(), playerNum);
         }
     }
 
