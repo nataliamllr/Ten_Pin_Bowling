@@ -6,6 +6,10 @@ public class Play {
     private static Game game;
     private static Scanner scanner;
 
+    /**
+     * Main method which starts the game
+     * @param args
+     */
     public static void main(String[] args) {
         game = new Game();
         scanner = new Scanner(System.in);
@@ -13,23 +17,35 @@ public class Play {
 
     }
 
+    /**
+     * Play game method creates the players and stars the game. At the end of the game it prints out the scorecard of each player.
+     */
     public static void playGame() {
         System.out.println("How many players?");
         int noOfPlayers = scanner.nextInt();
         checkAndCreateNumOfPlayers(noOfPlayers);
-
+        //iterate through each frame
         for (int frameNum = 0; frameNum < game.getMaxFrames(); frameNum++) {
             playFrame(frameNum);
         }
         System.out.println(game.printFullScoreCard());
     }
 
+    /**
+     * Play frame method iterates through each player. Each player then bowls.
+     * @param frameNum
+     */
     private static void playFrame(int frameNum) {
         for (int playerNum = 0; playerNum < game.getPlayers().size(); playerNum++) {
             playerBowl(frameNum, playerNum);
         }
     }
 
+    /**
+     * Player bowl method takes in bowl score. It then validates and determines whether the bowl is a strike or whether the player gets another bowl/
+     * @param frameNum
+     * @param playerNum
+     */
     private static void playerBowl(int frameNum, int playerNum) {
 
         System.out.println("Please enter player - " + game.getPlayer(playerNum).getName() + ", Frame - " + frameNum + ", bowl - 1, score:");
@@ -61,6 +77,12 @@ public class Play {
     }
 
 
+    /**
+     * Player second bowl allows the player to take a second bowl. Adds the score to the player.
+     * @param frameNum
+     * @param playerNum
+     * @param bowl1Score
+     */
     private static void playerSecondBowl(int frameNum, int playerNum, int bowl1Score) {
         System.out.println("Please enter player - " + game.getPlayer(playerNum).getName() + ", Frame - " + frameNum + ", bowl -  2, score:");
         int bowl2Score = scanner.nextInt();
@@ -82,6 +104,10 @@ public class Play {
     }
 
 
+    /**
+     * Iterates through the number of player specified. Requests a name for each player and creates them.
+     * @param noOfPlayers
+     */
     private static void createPlayers(int noOfPlayers) {
         for (int i = 0; i < noOfPlayers; i++) {
             System.out.print("Enter Player " + i + " name");
@@ -89,6 +115,11 @@ public class Play {
         }
     }
 
+    /**
+     * Checks whether the number of players is valid. If not requests number again. Recursive checking. Once player number is
+     * satisfactory it creates the players.
+     * @param noOfPlayers
+     */
     private static void checkAndCreateNumOfPlayers(int noOfPlayers) {
         if (!game.isNoOfPlayersValid(noOfPlayers)) {
             System.out.println("Sorry you cannot have more than 6 players");
