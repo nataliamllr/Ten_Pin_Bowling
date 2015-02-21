@@ -43,7 +43,7 @@ public class Play {
                 System.out.println("Enter Bowl 2 score");
                 int extraScore2 = scanner.nextInt();
                 // you achieve an extra bowl and the points are saved as extra points in the frame
-                game.getPlayer(0).extraBowl(bowl1Score, 0, extraScore1, extraScore2);
+                game.getPlayer(playerNum).extraBowl(bowl1Score, 0, extraScore1, extraScore2);
                 game.updateScore(playerNum, frameNum);
             // if the bowl is a strike in a normal frame
             } else if (game.isStrike(bowl1Score)) {
